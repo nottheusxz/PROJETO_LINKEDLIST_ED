@@ -8,10 +8,29 @@ int lista_vazia(t_lista *pl) {
     return pl->primeiro == NULL;
 }
 
-void insere_inicio(int e, t_lista *pl) {
+void insere_vip(int e, t_lista *pl) {
     t_no *novo = constroi_no(e);
-    if(!lista_vazia(pl)) novo->proximo = pl->primeiro;
-    pl->primeiro = novo;
+
+    if (lista_vazia(pl)) {
+        pl->primeiro = novo;
+        return;
+    }
+
+    if (pl->primeiro->info < 100) {
+        novo->proximo = pl->primeiro;
+        pl->primeiro = novo;
+        return;
+    }
+
+    t_no *runner = pl->primeiro;
+
+    while (runner->proximo != NULL &&
+           runner->proximo->info >= 100) {
+        runner = runner->proximo;
+    }
+
+    novo->proximo = runner->proximo;
+    runner->proximo = novo;
 }
 
 void insere_fim(int e, t_lista *pl) {
@@ -37,7 +56,7 @@ int remove_inicio(t_lista *pl) {
 int remove_fim(t_lista *pl) {
     int copia_valor;
     t_no *copia_endereco;
-    if(pl->primeiro->proximo == NULL) { //Tem apenas um elemento
+    if(pl->primeiro->proximo == NULL) { //so tem um elemento
         copia_valor = pl->primeiro->info;
         copia_endereco = pl->primeiro;
         pl->primeiro = NULL;

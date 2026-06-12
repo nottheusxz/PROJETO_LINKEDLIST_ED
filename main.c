@@ -40,7 +40,7 @@ int main() {
                 break;
                 
             case 2:
-                insere_inicio(senha_vip, &fila); 
+                insere_vip(senha_vip, &fila);
                 printf("-> Senha VIP gerada: %d\n", senha_vip);
                 senha_vip++; 
                 break;
